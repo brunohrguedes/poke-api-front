@@ -16,7 +16,9 @@ export default function Details() {
       <View>
         <Text style={styles.subtitle}>Lista de habilidades:</Text>
         {pokemon.abilities.map((item) => (
-          <Text key={item.ability.name}>* {capitalize(item.ability.name)}</Text>
+          <Text key={item.ability.name} style={styles.abilityText}>
+            * {capitalize(item.ability.name)}
+          </Text>
         ))}
       </View>
     </View>

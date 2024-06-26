@@ -14,8 +14,14 @@ export const styles = StyleSheet.create({
   name: {
     fontSize: 50,
     fontWeight: "bold",
+    color: "#004a94",
   },
   subtitle: {
     fontSize: 20,
+    color: "#004a94",
+    fontWeight: "bold",
+  },
+  abilityText: {
+    fontSize: 16,
   },
 });
