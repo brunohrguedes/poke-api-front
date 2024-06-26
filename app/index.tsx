@@ -1,6 +1,35 @@
-import { Text, View, TextInput, Button, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  StyleSheet,
+  Image,
+  Pressable,
+} from "react-native";
+import { useForm, Controller } from "react-hook-form";
+
+import { api } from "@/api/axios";
 
 export default function Index() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  const onSubmit = async (data: any) => {
+    await api
+      .get(`/api/pokemons/${data.name}`)
+      .then((response: any) => console.log(JSON.stringify(response.data)))
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
+
   return (
     <View
       style={{
@@ -9,9 +38,31 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <Image source={require("../assets/images/pokemon-logo.png")} />
+
       <Text>Insira o nome do Pokémon</Text>
-      <TextInput placeholder="Pikachu" style={styles.input} />
-      <Button title="Buscar" />
+
+      <Controller
+        control={control}
+        name="name"
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Pikachu"
+            style={styles.input}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+      {errors.name && <Text>Esse campo é obrigatório.</Text>}
+
+      <Pressable onPress={handleSubmit(onSubmit)}>
+        <Text>Buscar</Text>
+      </Pressable>
     </View>
   );
 }
