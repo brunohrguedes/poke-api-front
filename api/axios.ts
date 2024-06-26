@@ -4,5 +4,5 @@ const apiUrl = process.env.EXPO_PUBLIC_POKE_API_URL;
 
 export const api = axios.create({
   baseURL: apiUrl,
-  timeout: 10000,
+  timeout: 2000,
 });
