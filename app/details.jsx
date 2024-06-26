@@ -1,6 +1,8 @@
 import { useLocalSearchParams } from "expo-router";
 import { Image, Text, View } from "react-native";
 
+import { capitalize } from "@/utils/capitalize";
+
 import { styles } from "./styles/details";
 
 export default function Details() {
@@ -9,11 +11,14 @@ export default function Details() {
 
   return (
     <View style={styles.container}>
-      <Text>{pokemon.name}</Text>
+      <Text style={styles.name}>{capitalize(pokemon.name)}</Text>
       <Image style={styles.sprite} source={{ uri: `${pokemon.frontSprite}` }} />
-      {pokemon.abilities.map((item) => (
-        <Text key={item.ability.name}>{item.ability.name}</Text>
-      ))}
+      <View>
+        <Text style={styles.subtitle}>Lista de habilidades:</Text>
+        {pokemon.abilities.map((item) => (
+          <Text key={item.ability.name}>- {capitalize(item.ability.name)}</Text>
+        ))}
+      </View>
     </View>
   );
 }
