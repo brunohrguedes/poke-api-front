@@ -7,6 +7,7 @@ import {
   ToastAndroid,
   TouchableWithoutFeedback,
   Keyboard,
+  ImageBackground,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
@@ -50,37 +51,42 @@ export default function Index() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image source={require("../assets/images/pokemon-logo.png")} />
-          <Text style={styles.title}>Visualizador de habilidades</Text>
-        </View>
-        <View style={styles.form}>
-          <Text style={styles.inputLabel}>
-            Insira o nome ou o ID do Pokémon
-          </Text>
-          <Controller
-            control={control}
-            name="name"
-            rules={{
-              required: true,
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder="Pikachu"
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
+      <ImageBackground
+        resizeMode="cover"
+        style={styles.backgroundImage}
+        source={require("../assets/images/background.jpg")}
+      >
+        <View style={styles.container}>
+          <Image
+            style={styles.logo}
+            source={require("../assets/images/pokemon-logo.png")}
           />
-          {errors.name && <Text>Esse campo é obrigatório.</Text>}
+          <View style={styles.form}>
+            <Controller
+              control={control}
+              name="name"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  placeholder="Insira o nome do Pokémon..."
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            {errors.name && (
+              <Text style={styles.errorText}>Esse campo é obrigatório.</Text>
+            )}
+            <Pressable onPress={handleSubmit(onSubmit)} style={styles.button}>
+              <Text style={styles.buttonText}>Buscar</Text>
+            </Pressable>
+          </View>
         </View>
-        <Pressable onPress={handleSubmit(onSubmit)} style={styles.button}>
-          <Text style={styles.buttonText}>Buscar</Text>
-        </Pressable>
-      </View>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
